@@ -1,0 +1,59 @@
+<div class="containerImage" *ngIf= "project">
+    <br><br><br>
+    <h2>{{title}}</h2>
+   <div class="message success" *ngIf= "status == 'success'"  >
+       Your Project was created to see it <a [routerLink] = "['/project-detail', save_project._id]">click here</a>
+   </div>
+   
+   <div class="message failed" *ngIf= "status == 'failed'"  >
+       There was a problem while creating the project.
+   </div>
+   
+   
+    <form #projectForm="ngForm" (ngSubmit)="onSubmit(projectForm)" >
+       <p>
+           <label for="name">Name</label>
+           <input type="text" name="name" #name="ngModel" [(ngModel)]="project.name" required/>
+           <span class="form_error" *ngIf="name.touched && !name.valid">
+               Name field is required
+           </span>
+       </p>
+   
+       <p>
+           <label for="description">Description</label>
+           <textarea name="description" #description="ngModel" [(ngModel)]="project.description" required></textarea>
+           <span class="form_error" *ngIf="description.touched && !description.valid">
+               Description field is required
+           </span>
+       </p>
+   
+       <p>
+            <label for="started">Started</label>
+            <input type="text" name="started" #started="ngModel" [(ngModel)]="project.started"/>
+       </p>
+   
+       <p>
+           <label for="completed">Completed</label>
+           <input type="text" name="completed" #completed="ngModel" [(ngModel)]="project.completed"/>
+       </p>
+   
+       <p>
+           <label for="service">service</label>
+           <input type="text" name="service" #service="ngModel" [(ngModel)]="project.service" required/>
+           <span class="form_error" *ngIf="service.touched && !service.valid">
+               Service field is required
+           </span>
+       </p>
+   
+       <p>
+           <label for="image">image</label>
+           <span class="image" *ngIf="project.image" style="float: none;">
+               <img src="{{url + 'get-image/'+ project.image}}" *ngIf= "project.image" style= "width:100px; height: 100px;" />
+           </span><br>
+           <input type="file" name="image" placeholder="upload image" (change)="fileChangeEvent($event)"/>
+       </p>
+  
+       <input type="submit" value="Send" [disabled]="!projectForm.form.valid"/>
+    </form>
+   </div>
+   
